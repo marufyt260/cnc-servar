@@ -1,17 +1,10 @@
 {
-  "name": "cnc-auto-design",
+  "name": "admin-panel",
+  "private": true,
   "version": "1.0.0",
-  "description": "CNC Auto Design Desktop Application",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron ."
-  },
-  "author": "",
-  "license": "ISC",
+  "description": "Admin panel deployment with Netlify Functions",
+  "license": "UNLICENSED",
   "dependencies": {
-    "@netlify/blobs": "^6.0.0"
-  },
-  "devDependencies": {
-    "electron": "^28.1.0"
+    "@netlify/blobs": "^6.4.0"
   }
 }
