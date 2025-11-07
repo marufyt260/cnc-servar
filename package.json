@@ -1,21 +1,17 @@
 {
-  "name": "cnc-auto-design-backend",
+  "name": "cnc-auto-design",
   "version": "1.0.0",
-  "description": "Express API for CNC Auto Design project",
-  "main": "index.js",
-  "type": "module",
+  "description": "CNC Auto Design Desktop Application",
+  "main": "main.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "electron ."
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "better-sqlite3": "^9.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "@netlify/blobs": "^6.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "electron": "^28.1.0"
   }
 }
-
