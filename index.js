@@ -10,6 +10,56 @@ const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'change-me';
 app.use(cors({ origin: process.env.ALLOWED_ORIGIN?.split(',') || '*' }));
 app.use(express.json());
 
+// Helpers to map DB rows (snake_case) to API responses (camelCase)
+function mapPayment(row) {
+  if (!row) return row;
+  return {
+    id: row.id,
+    userName: row.user_name,
+    userMobile: row.user_mobile,
+    userEmail: row.user_email,
+    package: row.package,
+    paymentMethod: row.payment_method,
+    amount: row.amount,
+    transactionId: row.transaction_id,
+    status: row.status,
+    date: row.created_at,
+    approvalDate: row.approval_date,
+    notes: row.notes,
+  };
+}
+
+function mapRegistration(row) {
+  if (!row) return row;
+  return {
+    id: row.id,
+    firstName: row.first_name,
+    lastName: row.last_name,
+    fullName: row.full_name,
+    email: row.email,
+    phone: row.phone,
+    username: row.username,
+    package: row.package,
+    status: row.status,
+    registrationDate: row.created_at,
+    metadata: row.metadata,
+  };
+}
+
+function mapActiveUser(row) {
+  if (!row) return row;
+  return {
+    id: row.id,
+    name: row.name,
+    email: row.email,
+    mobile: row.mobile,
+    package: row.package,
+    status: row.status,
+    joinDate: row.join_date,
+    expiresAt: row.expires_at,
+  };
+}
+
 const insertRegistration = db.prepare(`
   INSERT INTO registrations (first_name, last_name, full_name, email, phone, username, package, status, metadata)
   VALUES (@firstName, @lastName, @fullName, @email, @phone, @username, @package, 'pending_payment', @metadata)
@@ -65,7 +115,7 @@ app.post('/api/registrations', (req, res) => {
 app.get('/api/registrations', (_req, res) => {
   try {
     const rows = fetchRegistrations.all();
-    res.json(rows);
+    res.json(rows.map(mapRegistration));
   } catch (err) {
     console.error('fetch registrations error', err);
     res.status(500).json({ error: 'Failed to load registrations' });
@@ -96,7 +146,7 @@ app.post('/api/payments', (req, res) => {
 app.get('/api/payments', (_req, res) => {
   try {
     const rows = fetchPayments.all();
-    res.json(rows);
+    res.json(rows.map(mapPayment));
   } catch (err) {
     console.error('fetch payments error', err);
     res.status(500).json({ error: 'Failed to load payments' });
@@ -142,13 +192,13 @@ app.patch('/api/payments/:id', (req, res) => {
   }
 
   const updated = fetchPaymentById.get(id);
-  res.json(updated);
+  res.json(mapPayment(updated));
 });
 
 app.get('/api/active-users', (_req, res) => {
   try {
     const rows = fetchActiveUsers.all();
-    res.json(rows);
+    res.json(rows.map(mapActiveUser));
   } catch (err) {
     console.error('fetch active users error', err);
     res.status(500).json({ error: 'Failed to load active users' });
