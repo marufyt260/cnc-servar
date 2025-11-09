@@ -1,10 +1,21 @@
 {
-  "name": "admin-panel",
-  "private": true,
+  "name": "cnc-auto-design-backend",
   "version": "1.0.0",
-  "description": "Admin panel deployment with Netlify Functions",
-  "license": "UNLICENSED",
+  "description": "Express API for CNC Auto Design project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
   "dependencies": {
-    "@netlify/blobs": "^6.4.0"
+    "better-sqlite3": "^9.0.0",
+    "cnc-auto-design": "file:..",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
